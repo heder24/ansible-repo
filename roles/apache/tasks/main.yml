@@ -1,0 +1,39 @@
+---
+# tasks file for apache
+    - name: Install updates the Servers
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: copy the apache config file 
+      copy:
+        src: "{{web_config}}"
+        dest: /etc/apache2/sites-available/{{domain}}
+      notify: Restart Apache
+
+    - name: Copy Health Check Page to Servers
+      ansible.builtin.copy:
+        src: health.html
+        dest: /var/www/html/health.html
+        owner: ubuntu
+        group: ubuntu
+        mode: 644
+
+    - name: Create default web directory to host apps
+      ansible.builtin.file:
+        path: /var/www/html/web-apps/
+        state: directory
+        mode: '0755'
+
+    - name: Copy Default Web Contents to Server
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: ubuntu
+        group: ubuntu
+        mode: 644
+

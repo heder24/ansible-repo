@@ -1,0 +1,4 @@
+---
+- hosts: tag_Name_web_nginx
+  roles:
+    - nginx

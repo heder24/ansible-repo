@@ -1,0 +1,4 @@
+---
+# vars file for apache
+domain: stage.hederdevops.com
+web_config: ../files/apache-config/stage.hederdevops.com

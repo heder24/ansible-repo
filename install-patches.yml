@@ -1,0 +1,14 @@
+---
+
+############ Install updates and reboot servers ##############
+- hosts: tag_Name_web_ansible
+  become: true 
+  tasks:
+  - name: Install the latest Updates
+    ansible.builtin.apt:
+      update_cache: yes
+    register: latest_updates
+
+  - name: Reboot the servers after latest updates are completed
+    ansible.builtin.reboot:
+    when: latest_updates.changed

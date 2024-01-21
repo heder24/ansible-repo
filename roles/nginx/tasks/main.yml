@@ -1,0 +1,48 @@
+---
+# tasks file for nginx
+- name: Install updates the Servers
+  ansible.builtin.apt:
+    update_cache: yes
+    
+- name: ensure nginx is at the latest version
+  apt: name=nginx state=latest
+
+- name: copy the nginx config file and restart nginx
+  copy:
+    src: "{{web_config}}"
+    dest: /etc/nginx/sites-available/{{domain}}
+  notify: Restart nginx
+
+- name: create symlink
+  file:
+    src: /etc/nginx/sites-available/{{domain}}
+    dest: /etc/nginx/sites-enabled/{{domain}}
+    state: link
+
+- name: Copy Health Check Page to Servers 
+  ansible.builtin.copy:
+    src: health.html
+    dest: /var/www/html/health.html
+    owner: ubuntu
+    group: ubuntu
+    mode: 644
+
+- name: Create default web directory if it does not exist
+  ansible.builtin.file:
+    path: /var/www/html/web-apps/
+    state: directory
+    mode: '0755'
+
+- name: Copy Default Web Contents to Server
+  ansible.builtin.copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    owner: ubuntu
+    group: ubuntu
+    mode: 644
+
+# - name: restart nginx
+#   service:
+#     name: nginx
+#     state: restarted
+

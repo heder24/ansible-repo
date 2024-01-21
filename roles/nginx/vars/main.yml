@@ -1,0 +1,4 @@
+---
+# vars file for nginx
+domain: stage.hederdevops.com
+web_config: ../files/nginx-config/stage.hederdevops.com
