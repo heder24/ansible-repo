@@ -23,13 +23,13 @@
         group: ubuntu
         mode: 644
 
-    - name: Create default web directory to host apps
+    - name: Create a web directory 
       ansible.builtin.file:
         path: /var/www/html/web-apps/
         state: directory
         mode: '0755'
 
-    - name: Copy Default Web Contents to Server
+    - name: Copy Web Contents to Server
       ansible.builtin.copy:
         src: index.html
         dest: /var/www/html/index.html
