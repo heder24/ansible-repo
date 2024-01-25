@@ -1,0 +1,21 @@
+---
+plugin: amazon.aws.aws_ec2
+aws_profile: default
+hostnames:
+  # - name: 'private-ip-address'
+  #   separator: '_'
+  #   prefix: 'tag:Name'
+  - private-ip-address
+  # - dns-name
+  # - tag:Name
+  # compose:
+  # ansible_host: private_ip_address
+  # ansible_user: ubuntu
+  # ansible_ssh_private_key_file: ~/.ssh/main-us-east-2.pem
+  # - name: 'tag:Name=Web-ansible'
+# filters:
+#   - tag:Name:
+#     - Web-ansible
+keyed_groups:
+  - key: tags
+    prefix: tag
