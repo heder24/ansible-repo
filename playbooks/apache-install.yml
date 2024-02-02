@@ -1,4 +1,4 @@
 ---
-- hosts: tag_Name_web_apache
+- hosts: all #Name_web_apache
   roles:
     - apache

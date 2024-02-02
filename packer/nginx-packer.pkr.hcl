@@ -11,8 +11,8 @@ locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
 
-source "amazon-ebs" "web-apache" {
-  ami_name = "packer-apache-${local.timestamp}"
+source "amazon-ebs" "web-nginx" {
+  ami_name = "packer-nginx-${local.timestamp}"
   instance_type = "t2.micro"
   region = "us-east-2"
   profile = "default"
@@ -27,16 +27,16 @@ source "amazon-ebs" "web-apache" {
   }
   ssh_username = "ubuntu"
   tags = {
-    Name = "packer-apache-${local.timestamp}"
+    Name = "packer-nginx-${local.timestamp}"
   }
 }
 
 build {
-  name    = "packer-web-apache"
-  sources = ["source.amazon-ebs.web-apache"]
+  name    = "packer-web-nginx"
+  sources = ["source.amazon-ebs.web-nginx"]
 
   provisioner "ansible" {
-    playbook_file    = "../playbooks/apache-install.yml"
+    playbook_file    = "../playbooks/nginx-install.yml"
     ansible_env_vars = ["ANSIBLE_CONFIG=ansible.cfg"]
     extra_arguments  = ["-vvvv"]
     user             = "ubuntu"
